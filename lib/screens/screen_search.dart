@@ -56,7 +56,7 @@ class _PageSearchState extends State<PageSearch> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text('Test Task: Bloc + Paging', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
+                child: Text('Test Task: Clean + Paging', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
@@ -76,7 +76,6 @@ class _PageSearchState extends State<PageSearch> {
                           maxLines: 1,
                           obscureText: false,
                           textAlignVertical: TextAlignVertical.center,
-                          textInputAction: TextInputAction.continueAction,
                           autofocus: false,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -106,13 +105,16 @@ class _PageSearchState extends State<PageSearch> {
               ),
               (_searchInputController.text.length > AppConfig.minTextLength)
                   ? MissionsList(searchStr: _searchInputController.text)
-                  : Center(
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
-                      children: [
-                        Text(inputError ?? '', style: TextStyle(color: Colors.redAccent, fontSize: 14.0)),
-                        AstronautAnimation(),
-                      ],
-                    )),
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(inputError ?? '', textAlign: TextAlign.center, style: TextStyle(color: Colors.redAccent, fontSize: 14.0)),
+                          AstronautAnimation(),
+                        ],
+                      ),
+                    ),
             ],
           ),
         ),
