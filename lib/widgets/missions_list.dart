@@ -24,7 +24,7 @@ class _MissionsListState extends State<MissionsList> {
 
   @override
   Widget build(BuildContext context) {
-    String readRepositories = """
+    String qFetchMissions = """
       query Launches(\$mission_name: String!, \$limit: Int!, \$offset: Int!) {        
         launches(find: {mission_name:\$mission_name}, limit: \$limit, offset: \$offset, sort: "launch_year") {
           id
@@ -39,7 +39,7 @@ class _MissionsListState extends State<MissionsList> {
     return Query(
       options: QueryOptions(
         fetchPolicy: FetchPolicy.cacheFirst,
-        document: gql(readRepositories),
+        document: gql(qFetchMissions),
         variables: <String, dynamic>{'offset': 0, "mission_name": widget.searchStr, 'limit': AppConfig.limitPerPage},
       ),
       builder: (QueryResult result, {Refetch? refetch, FetchMore? fetchMore}) {

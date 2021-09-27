@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return SearchProvider(
       url: AppConfig.graphqlEndpoint,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Test Task - Clean With Paging',
         theme: ThemeData.dark(),
         home: PageSearch(),
       ),

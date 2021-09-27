@@ -1,4 +1,5 @@
 import 'package:app_01/widgets/astronaut_animation.dart';
+import 'package:app_01/widgets/drawer_custom.dart';
 import 'package:app_01/widgets/missions_list.dart';
 import 'package:flutter/material.dart';
 
@@ -49,26 +50,14 @@ class _PageSearchState extends State<PageSearch> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
-        drawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: [
-              CircleAvatar(),
-              ListTile(
-                title: const Text('Item 1'),
-                onTap: () {},
-              ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
+        drawer: DrawerCustom(),
         body: Center(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Text('Test Task: Bloc + Paging', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
+              ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 width: MediaQuery.of(context).size.width * 0.95,
