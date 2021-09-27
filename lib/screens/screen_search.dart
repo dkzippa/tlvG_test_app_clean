@@ -1,4 +1,4 @@
-import 'package:app_01/widgets/cosmonaut_animation.dart';
+import 'package:app_01/widgets/astronaut_animation.dart';
 import 'package:app_01/widgets/missions_list.dart';
 import 'package:flutter/material.dart';
 
@@ -44,9 +44,27 @@ class _PageSearchState extends State<PageSearch> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Image(image: AssetImage('assets/images/spacex.png'), width: MediaQuery.of(context).size.width * 0.6),
+          centerTitle: true,
+          title: Image(image: AssetImage('assets/images/spacex.png'), width: MediaQuery.of(context).size.width * 0.5),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+        ),
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              CircleAvatar(),
+              ListTile(
+                title: const Text('Item 1'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text('Item 2'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
         body: Center(
           child: Column(
@@ -103,7 +121,7 @@ class _PageSearchState extends State<PageSearch> {
                       child: Column(
                       children: [
                         Text(inputError ?? '', style: TextStyle(color: Colors.redAccent, fontSize: 14.0)),
-                        CosmonautAnimation(),
+                        AstronautAnimation(),
                       ],
                     )),
             ],

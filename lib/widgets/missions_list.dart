@@ -1,9 +1,8 @@
 import 'package:app_01/models/mission_model.dart';
-import 'package:app_01/widgets/cosmonaut_animation.dart';
+import 'package:app_01/widgets/astronaut_animation.dart';
 import 'package:app_01/widgets/missions_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:lottie/lottie.dart';
 
 import '../app_config.dart';
 
@@ -65,7 +64,7 @@ class _MissionsListState extends State<MissionsList> {
                 children: [
                   Text('No matches found. Please choose another names, for example "Falcon", "Star", etc',
                       textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  CosmonautAnimation(),
+                  AstronautAnimation(),
                 ],
               ),
             ),
