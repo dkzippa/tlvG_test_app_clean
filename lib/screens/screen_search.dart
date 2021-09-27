@@ -1,7 +1,8 @@
+import 'package:app_01/widgets/cosmonaut_animation.dart';
 import 'package:app_01/widgets/missions_list.dart';
 import 'package:flutter/material.dart';
 
-const minTextLength = 0;
+import '../app_config.dart';
 
 class PageSearch extends StatefulWidget {
   const PageSearch({Key? key}) : super(key: key);
@@ -13,16 +14,16 @@ class PageSearch extends StatefulWidget {
 class _PageSearchState extends State<PageSearch> {
   final _searchInputController = TextEditingController();
   final GlobalKey<FormState> _searchFormKey = GlobalKey<FormState>();
-  String inputError = '';
+  String? inputError;
 
   @override
   void initState() {
     super.initState();
 
     _searchInputController.addListener(() {
-      if (_searchInputController.text.length > 0 && _searchInputController.text.length <= minTextLength) {
+      if (_searchInputController.text.length > 0 && _searchInputController.text.length <= AppConfig.minTextLength) {
         setState(() {
-          inputError = 'Please type correct mission name, (min $minTextLength symbols)';
+          inputError = 'Please type correct mission name, (min $AppConfig.minTextLength symbols)';
         });
       } else {
         setState(() {
@@ -54,7 +55,7 @@ class _PageSearchState extends State<PageSearch> {
                 margin: EdgeInsets.symmetric(vertical: 20),
                 width: MediaQuery.of(context).size.width * 0.95,
                 decoration: BoxDecoration(
-                  color: (inputError == '' || inputError.isEmpty) ? Theme.of(context).cardColor : Colors.red.withOpacity(0.2),
+                  color: (inputError == '' || inputError == null) ? Theme.of(context).cardColor : Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Row(
@@ -96,9 +97,15 @@ class _PageSearchState extends State<PageSearch> {
                   ],
                 ),
               ),
-              (_searchInputController.text.length > minTextLength)
+              (_searchInputController.text.length > AppConfig.minTextLength)
                   ? MissionsList(searchStr: _searchInputController.text)
-                  : Center(child: Text(inputError, style: TextStyle(color: Colors.redAccent, fontSize: 14.0))),
+                  : Center(
+                      child: Column(
+                      children: [
+                        Text(inputError ?? '', style: TextStyle(color: Colors.redAccent, fontSize: 14.0)),
+                        CosmonautAnimation(),
+                      ],
+                    )),
             ],
           ),
         ),

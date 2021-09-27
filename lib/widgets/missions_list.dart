@@ -1,8 +1,11 @@
 import 'package:app_01/models/mission_model.dart';
+import 'package:app_01/widgets/cosmonaut_animation.dart';
 import 'package:app_01/widgets/missions_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:lottie/lottie.dart';
+
+import '../app_config.dart';
 
 class MissionsList extends StatefulWidget {
   final String? searchStr;
@@ -13,6 +16,13 @@ class MissionsList extends StatefulWidget {
 }
 
 class _MissionsListState extends State<MissionsList> {
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String readRepositories = """
@@ -31,7 +41,7 @@ class _MissionsListState extends State<MissionsList> {
       options: QueryOptions(
         fetchPolicy: FetchPolicy.cacheFirst,
         document: gql(readRepositories),
-        variables: <String, dynamic>{'offset': 0, "mission_name": widget.searchStr, 'limit': 10},
+        variables: <String, dynamic>{'offset': 0, "mission_name": widget.searchStr, 'limit': AppConfig.limitPerPage},
       ),
       builder: (QueryResult result, {Refetch? refetch, FetchMore? fetchMore}) {
         if (result.hasException) {
@@ -42,8 +52,6 @@ class _MissionsListState extends State<MissionsList> {
             child: CircularProgressIndicator(),
           );
         }
-
-        print('\n\n\n\n ------------- \n GET 1 missions.length: ' + result.data.toString());
 
         List<MissionModel> missions = result.data!['launches'].map<MissionModel>((missionJsonData) {
           return MissionModel.fromJson(missionJsonData);
@@ -57,7 +65,7 @@ class _MissionsListState extends State<MissionsList> {
                 children: [
                   Text('No matches found. Please choose another names, for example "Falcon", "Star", etc',
                       textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  Lottie.network('https://assets5.lottiefiles.com/packages/lf20_Bu8wPm.json'),
+                  CosmonautAnimation(),
                 ],
               ),
             ),
@@ -74,6 +82,7 @@ class _MissionsListState extends State<MissionsList> {
                   width: double.infinity,
                   height: 100,
                   child: ListView.builder(
+                    controller: _scrollController,
                     itemCount: missions.length,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int idx) {
@@ -81,6 +90,25 @@ class _MissionsListState extends State<MissionsList> {
                     },
                   ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  //
+                  FetchMoreOptions opts = FetchMoreOptions(
+                    variables: {'offset': missions.length},
+                    updateQuery: (previousResultData, fetchMoreResultData) {
+                      final List<dynamic> repos = [
+                        ...previousResultData!['launches'] as List<dynamic>,
+                        ...fetchMoreResultData!['launches'] as List<dynamic>
+                      ];
+                      fetchMoreResultData['launches'] = repos;
+                      return fetchMoreResultData;
+                    },
+                  );
+
+                  fetchMore!(opts);
+                },
+                child: Text('LOAD MORE'),
               ),
             ],
           ),
