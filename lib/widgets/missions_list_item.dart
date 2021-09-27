@@ -11,7 +11,8 @@ class MissionsListItem extends StatelessWidget {
       // height: 90,
       padding: EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 15),
       margin: EdgeInsets.symmetric(vertical: 5.0),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Colors.green.withOpacity(0.1)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0), color: mission!.launchSuccess! ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1)),
       child: Column(
         children: [
           Row(
