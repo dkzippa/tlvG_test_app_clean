@@ -24,7 +24,7 @@ class _PageSearchState extends State<PageSearch> {
     _searchInputController.addListener(() {
       if (_searchInputController.text.length > 0 && _searchInputController.text.length <= AppConfig.minTextLength) {
         setState(() {
-          inputError = 'Please type correct mission name, (min $AppConfig.minTextLength symbols)';
+          inputError = 'Please type correct mission name, (min ${AppConfig.minTextLength} symbols)';
         });
       } else {
         setState(() {
